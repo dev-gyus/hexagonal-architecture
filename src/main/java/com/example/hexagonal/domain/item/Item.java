@@ -25,6 +25,7 @@ public class Item {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 //    @Column(length = 30, unique = true, nullable = false)
+    //;;;
     @Indexed(unique = true)
     private String name;
 //    @Column(nullable = false)
