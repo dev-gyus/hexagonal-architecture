@@ -1,11 +1,11 @@
 package com.example.hexagonal.domain.item;
 
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,18 +14,21 @@ import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.util.StringUtils;
 
+//import javax.persistence.Entity;
+//import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
-//@Entity
+@Entity
+@QueryEntity
 @Document
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-//    @Column(length = 30, unique = true, nullable = false)
-    //;;;
+    @org.springframework.data.annotation.Id
+    private String id;
     @Indexed(unique = true)
     private String name;
 //    @Column(nullable = false)
@@ -47,7 +50,7 @@ public class Item {
      * unsing mongodb
      */
     public Item(Long id, String name, Integer price) {
-        this.id = id;
+        this.id = id.toString();
         this.name = name;
         this.price = price;
     }

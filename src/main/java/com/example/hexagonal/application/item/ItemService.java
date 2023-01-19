@@ -6,8 +6,8 @@ import org.bson.types.ObjectId;
 public interface ItemService {
     Item saveItem(ItemCommandParams params);
 
-    Item findItemById(Long id);
+    Item findItemById(String id);
 
-    void updateItem(Long id, ItemCommandParams params);
+    void updateItem(String id, ItemCommandParams params);
 
 }

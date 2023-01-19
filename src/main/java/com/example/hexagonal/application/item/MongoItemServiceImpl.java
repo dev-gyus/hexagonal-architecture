@@ -25,13 +25,16 @@ public class MongoItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item findItemById(Long id) {
+    public Item findItemById(String id) {
         return itemRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(MessageKeys.ITEM_NOT_FOUND));
     }
 
     @Override
-    public void updateItem(Long id, ItemCommandParams params) {
-        itemRepository.updateItem(id, params);
+    public void updateItem(String id, ItemCommandParams params) {
+        Item foundId = findItemById(id);
+        foundId.changeName(params.getName());
+        foundId.changePrice(params.getPrice());
+        itemRepository.save(foundId);
     }
 }
