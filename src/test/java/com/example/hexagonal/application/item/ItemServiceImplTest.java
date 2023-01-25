@@ -38,7 +38,7 @@ class ItemServiceImplTest {
     @Transactional
     void 아이템_저장_성공() {
         // given
-        String name = "item1";
+        String name = "item11";
         Integer price = 10000;
         ItemCommandParams params = new ItemCommandParams(1L, name, price);
         // when
