@@ -4,6 +4,8 @@ import com.example.hexagonal.application.exception.NotFoundException;
 import com.example.hexagonal.domain.item.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,29 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.convert.SimpleTypeInformationMapper;
+import org.springframework.data.convert.TypeAliasAccessor;
+import org.springframework.data.convert.TypeInformationMapper;
+import org.springframework.data.mapping.Alias;
+import org.springframework.data.mapping.PersistentEntity;
+import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
+import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.convert.*;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.data.util.ClassTypeInformation;
+import org.springframework.data.util.TypeInformation;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,10 +57,11 @@ class ItemServiceImplTest {
 
     @Test
     @Transactional
+    @Rollback(false)
     void 아이템_저장_성공() {
         // given
         String name = "ite22m";
-        Integer price = 10000;
+        Integer price = 100300;
         ItemCommandParams params = new ItemCommandParams(1L, name, price);
         // when
         Item item = itemService.saveItem(params);

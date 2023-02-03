@@ -3,7 +3,6 @@ package com.example.hexagonal.infrastructure.query.item;
 import com.example.hexagonal.application.item.ItemCommandParams;
 import com.example.hexagonal.domain.item.Item;
 import com.example.hexagonal.domain.item.ItemRepository;
-import com.example.hexagonal.domain.item.QItem;
 import com.example.hexagonal.domain.item.QueryItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
